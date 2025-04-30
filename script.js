@@ -1,49 +1,120 @@
+document.addEventListener('DOMContentLoaded', () => {
+
+  const storedData = localStorage.getItem('userSignup');
+  
+  if (storedData) {
+    try {
+      const userData = JSON.parse(storedData);
+      showSuccessMessage(userData);
+      updateSignupCount(userData.length || 0);
+    } catch (e) {
+      console.error('Error parsing stored data:', e);
+      showForm();
+    }
+  } else {
+    showForm();
+  }
+
+ 
+  updateSignupCount();
+  setInterval(updateSignupCount, 10000);
+});
+
+
 document.getElementById('waitlist-form').addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Collect form data
+ 
   const formData = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      dob: document.getElementById('dob').value // Already in yyyy-mm-dd format (e.g., "2002-04-29")
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    dob: document.getElementById('dob').value
   };
 
+  const dob = new Date(formData.dob);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const monthDiff = today.getMonth() - dob.getMonth();
+  
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+    age--;
+  }
+
+  
+  if (age < 18) {
+    alert('You must be at least 18 years old to participate in this challenge.');
+    return; // Stop form submission
+  }
+
   try {
+    
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    
     const response = await fetch('https://mysite-xq4z.onrender.com/waitlist/', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
     });
 
     if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const result = await response.json(); // Expecting an array of users
-    localStorage.setItem('userSignup', JSON.stringify(result));
-
-    document.getElementById('waitlist-form').classList.remove('show');
-    document.getElementById('waitlist-form').classList.add('hide');
+    const result = await response.json();
     
-    document.getElementById('success-message').classList.remove('hidden');
-    document.getElementById('success-message').classList.add('show');
+   
+    const existingData = JSON.parse(localStorage.getItem('userSignup')) || [];
+    const updatedData = [...existingData, ...(Array.isArray(result) ? result : [result])];
+    localStorage.setItem('userSignup', JSON.stringify(updatedData));
 
-    // Update success message with user's data
-    document.getElementById('success-name').textContent = formData.name;
-    document.getElementById('success-email').textContent = formData.email;
-
-    // Update sign-up count
-    updateSignupCount(result.length);
+   
+    showSuccessMessage(updatedData);
+    updateSignupCount(updatedData.length);
     
-} catch (error) {
+  } catch (error) {
     console.error('Error submitting form:', error);
-    alert('Something went wrong. Please try again.');
+    alert(error.message || 'Something went wrong. Please try again.');
+  } finally {
+    // Reset button state
+    const submitBtn = document.getElementById('submit-btn');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Join the Battle!';
+    }
+  }
+});
+
+
+function showSuccessMessage(userData) {
+
+  document.getElementById('waitlist-form').classList.remove('show');
+  document.getElementById('waitlist-form').classList.add('hide');
+  
+ 
+  const successMessage = document.getElementById('success-message');
+  successMessage.classList.remove('hidden');
+  successMessage.classList.add('show');
+
+  // Get the most recent user from stored data
+  const lastUser = userData[userData.length - 1] || {};
+
+  document.getElementById('success-name').textContent = lastUser.name || 'Participant';
+  document.getElementById('success-email').textContent = lastUser.email || '';
 }
 
-});
+function showForm() {
+  document.getElementById('waitlist-form').classList.add('show');
+  document.getElementById('waitlist-form').classList.remove('hide');
+  document.getElementById('success-message').classList.add('hidden');
+  document.getElementById('success-message').classList.remove('show');
+}
+
 
 async function updateSignupCount(newCount = null) {
   try {
@@ -59,43 +130,25 @@ async function updateSignupCount(newCount = null) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    const text = await response.text();
-    const data = JSON.parse(text);
-    const count = newCount !== null ? newCount : data.length;
+    const data = await response.json();
+    const storedData = JSON.parse(localStorage.getItem('userSignup')) || [];
+    const count = newCount !== null ? newCount : (data.length || storedData.length);
 
-    console.log('Parsed GET response data:', data);
-
-    const signupCountElement = document.getElementById('signup-count');
-    const milestoneTextElement = document.getElementById('milestone-text');
-
-    const progressFill = document.getElementById('progress-fill');
-    const progressIndicator = document.getElementById('progress-indicator');
 
     const maxSignups = 100;
     const percent = Math.min((count / maxSignups) * 100, 100).toFixed(2);
-
-    // Only these two are updated now
-    progressFill.style.width = `${percent}%`;
-    progressIndicator.style.left = `calc(${percent}% - 2.5px)`; // center the indicator
+    document.getElementById('progress-fill').style.width = `${percent}%`;
+    document.getElementById('progress-indicator').style.left = `calc(${percent}% - 2.5px)`;
     
 
-    signupCountElement.textContent = count || 0;
+    document.getElementById('signup-count').textContent = count;
 
-    if (count >= 100) {
-      milestoneTextElement.style.display = 'block';
+
+    if (count >= 100 && document.getElementById('milestone-text')) {
+      document.getElementById('milestone-text').style.display = 'block';
     }
   } catch (error) {
     console.error('Error fetching sign-up count:', error);
-    const signupCountElement = document.getElementById('signup-count');
-    if (signupCountElement) {
-      signupCountElement.textContent = 'Error';
-    }
+    document.getElementById('signup-count').textContent = 'Error';
   }
 }
-
-
-// Fetch initial sign-up count on page load
-updateSignupCount();
-
-// Periodically update the sign-up count every 10 seconds
-setInterval(updateSignupCount, 10000);

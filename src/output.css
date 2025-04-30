@@ -795,3 +795,19 @@
     }
   }
 }
+
+.form-area, .success-area {
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.form-area.hide {
+  opacity: 0;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+.success-area.show {
+  opacity: 1;
+  visibility: visible;
+}

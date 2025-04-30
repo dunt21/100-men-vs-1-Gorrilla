@@ -19,26 +19,50 @@
       >
         <div class="flex gap-5 text-gray text-[12px] lg:text-sm mb-[7px]">
           <p>Survivors <span class="hidden lg:inline">Sign Up </span>Count</p>
-          <p><span class="text-white">12 </span>/ 100</p>
+          <p><span id="signup-count" class="text-white"> </span>/ 100</p>
         </div>
-        <div
-          class="w-full bg-[rgba(244,244,244,0.2)] rounded-full outline-none h-2 relative"
-        >
-          <div class="text-green h-[7px] rounded-full" style="width: 40%"></div>
+
+
+        <div class="w-full bg-white rounded-full h-2 relative">
+          <!-- Green progress fill (remove absolute and negative top) -->
           <div
-            class="bg-[rgba(105,150,53,0.6)] h-[7px] absolute left-[40%] top-0 right-0 rounded-full"
-            style="width: 10%"
-          ></div>
-          <div
-            class="bg-[rgba(255,206,49,1)] w-[5px] h-[18px] absolute left-[39%] -top-[6px] right-0 rounded-full"
-          ></div>
+          id="progress-fill"
+          style="
+            background-color: rgba(52, 168, 83, 1);
+            height: 100%;
+            border-radius: 9999px;
+            width: 50%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transition: width 0.5s ease;
+          ">
         </div>
-      </div>
+        
+          <!-- Yellow progress indicator (keep absolutely positioned) -->
+          <div
+            id="progress-indicator"
+            style="
+              background-color: rgba(255, 206, 49, 1);
+              width: 5px;
+              height: 18px;
+              border-radius: 9999px;
+              position: absolute;
+              top: -5px;
+              left: calc(50% - 2.5px);
+              transition: left 0.5s ease;
+            ">
+          </div>
+        </div>
+        
+        
+        
+        
     </header>
     <main
       class="w-full min-h-auto bg-[rgba(0,0,0,0.6)] backdrop-blur-sm rounded-2xl border border-[rgba(255,255,255,0.2)] sm:max-w-[827px] self-center sm:min-h-fit overflow-x-hidden overflow-y-hidden"
     >
-      <section class="form-area show">
+      <section class="form-area show" id="waitlist-form">
         <div class="flex flex-col pt-8 text-gray w-full">
           <div class="px-5">
             <h1
@@ -52,7 +76,7 @@
               now—spots are limited, and the gorilla waits for no one!
             </p>
           </div>
-          <form class="flex user-form">
+          <form class="flex user-form" id="waitlist-form">
             <div class="w-full flex flex-col px-5 items-start lg:pb-7">
               <h2
                 class="font-semibold text-white text-[16px] lg:text-[20px] mt-5"
@@ -83,23 +107,26 @@
                   class="input-field"
                 />
               </div>
+              
               <div
                 class="w-full flex flex-col mt-3 gap-2 relative justify-center lg:w-[80%]"
               >
-                <label for="date-of-birth" class="text-[16px] text-gray"
+                <label for="dob" class="text-[16px] text-gray"
                   >Date of Birth</label
                 >
                 <input
-                  id="date-of-birth"
+                  id="dob"
                   type="date"
                   placeholder="mm/dd/yy"
                   class="input-field text-gray"
                   required
+                  
                 />
                 <img
-                  src="/images/calendar-2.svg"
-                  class="w-[18px] absolute top-[60%] left-[85%]"
-                />
+                src="/images/calendar-2.svg"
+                class="w-[18px] h-[18px] absolute top-[60%] left-[85%] cursor-pointer"
+                onclick="document.getElementById('dob').showPicker && document.getElementById('dob').showPicker()"
+              />
               </div>
               <div
                 class="inline-flex pt-3 space-x-4 items-start justify-center"
@@ -137,7 +164,7 @@
         </div>
       </section>
 
-      <section class="w-full hidden fade sm:self-start success-area">
+      <section id="success-message" class="w-full hidden fade success-area">
         <div class="">
           <div class="relative w-full overflow-x-hidden">
             <img
@@ -156,10 +183,10 @@
             </h2>
             <div class="sm:flex">
               <p class="text-gray text-sm text-[16px]">
-                Congrats, <span class="text-blue name-replace">Derrick</span>!
+                Congrats, <span id="success-name" class="text-blue">Derrick</span>
                 You’ve secured your spot on the waitlist for 100 men vrs
                 Gorilla. We’ll email you at
-                <span class="email-replace">derrick@gmail.com</span> with next
+                <span id="success-email">derrick@gmail.com</span> with next
                 steps. Stay tuned—this battle for $1,000,000 is about to get
                 wild!
               </p>

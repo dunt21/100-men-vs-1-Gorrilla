@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>100 Men Vrs A Gorilla</title>
+    <link rel="stylesheet" href="/src/output.css" />
+  </head>
+  <body
+    class="w-full min-h-screen bg-img px-5 py-3 lg:py-8 lg:px-14 font-[Open Sans] flex flex-col gap-8"
+  >
+    <header class="flex justify-between">
+      <img
+        src="images/BG_BEAST_GAMES_LOGO_FULL_COLOR_RGB_900PX_W_300PPI 1.svg"
+        class="w-20 lg:w-28"
+      />
+      <div
+        class="lg:border lg:bg-[rgba(0,0,0,0.4)] lg:border-[rgba(255,255,255,0.2)] p-3 rounded-xl"
+      >
+        <div class="flex gap-5 text-gray text-[12px] lg:text-sm mb-[7px]">
+          <p>Survivors <span class="hidden lg:inline">Sign Up </span>Count</p>
+          <p><span class="text-white">12 </span>/ 100</p>
+        </div>
+        <div
+          class="w-full bg-[rgba(244,244,244,0.2)] rounded-full outline-none h-2 relative"
+        >
+          <div class="text-green h-[7px] rounded-full" style="width: 40%"></div>
+          <div
+            class="bg-[rgba(105,150,53,0.6)] h-[7px] absolute left-[40%] top-0 right-0 rounded-full"
+            style="width: 10%"
+          ></div>
+          <div
+            class="bg-[rgba(255,206,49,1)] w-[5px] h-[18px] absolute left-[39%] -top-[6px] right-0 rounded-full"
+          ></div>
+        </div>
+      </div>
+    </header>
+    <main
+      class="w-full min-h-auto bg-[rgba(0,0,0,0.6)] backdrop-blur-sm rounded-2xl border border-[rgba(255,255,255,0.2)] sm:max-w-[827px] self-center sm:min-h-fit overflow-x-hidden overflow-y-hidden"
+    >
+      <section class="form-area show">
+        <div class="flex flex-col pt-8 text-gray w-full">
+          <div class="px-5">
+            <h1
+              class="font-semibold text-2xl lg:text-[32px] text-gray sm:w-[636px]"
+            >
+              Survive the Ultimate <span class="text-blue">Battle</span>:
+              <span class="text-white">100 Men vs. Gorilla!</span>
+            </h1>
+            <p class="text-[14px] lg:text-sm sm:w-[564px] mt-5">
+              Compete for a shot at $1,000,000 and eternal glory. Sign up
+              now—spots are limited, and the gorilla waits for no one!
+            </p>
+          </div>
+          <form class="flex user-form">
+            <div class="w-full flex flex-col px-5 items-start lg:pb-7">
+              <h2
+                class="font-semibold text-white text-[16px] lg:text-[20px] mt-5"
+              >
+                Join the Waitlist Now!
+              </h2>
+              <div class="mt-3 w-full lg:w-[80%]">
+                <label for="name" class="text-[16px] text-gray mb-2"
+                  >Full Name</label
+                >
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Enter Your Name"
+                  required
+                  class="input-field"
+                />
+              </div>
+              <div class="mt-3 w-full lg:w-[80%]">
+                <label for="email" class="text-[16px] text-gray mb-2"
+                  >Email</label
+                >
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="Enter Your Email"
+                  required
+                  class="input-field"
+                />
+              </div>
+              <div
+                class="w-full flex flex-col mt-3 gap-2 relative justify-center lg:w-[80%]"
+              >
+                <label for="date-of-birth" class="text-[16px] text-gray"
+                  >Date of Birth</label
+                >
+                <input
+                  id="date-of-birth"
+                  type="date"
+                  placeholder="mm/dd/yy"
+                  class="input-field text-gray"
+                  required
+                />
+                <img
+                  src="/images/calendar-2.svg"
+                  class="w-[18px] absolute top-[60%] left-[85%]"
+                />
+              </div>
+              <div
+                class="inline-flex pt-3 space-x-4 items-start justify-center"
+              >
+                <input
+                  type="radio"
+                  name="radio"
+                  required
+                  class="appearance-none w-5 h-5 border rounded-full border-[rgba(255,255,255,0.60)] bg-[rgba(0,0,0,0.1)] checked:bg-[radial-gradient(circle,_rgb(71,195,236)_35%,_rgba(255,255,255,0.1)_36%)]"
+                />
+                <p class="text-sm">
+                  I agree to the
+                  <span class="text-blue"> Terms of Service </span> and<span
+                    class="text-blue"
+                  >
+                    Privacy Policy
+                  </span>
+                </p>
+              </div>
+              <button
+                type="submit"
+                class="py-4 px-3 bg-light-blue rounded-xl font-semibold mt-6 cursor-pointer mb-8"
+                id="submit-btn"
+              >
+                Join the Battle!
+              </button>
+            </div>
+
+            <img
+              src="/images/desktop-dashboard.png"
+              class="hidden sm:block self-end"
+            />
+          </form>
+          <img src="/images/dashboard-img.png" class="mt-20 sm:hidden" />
+        </div>
+      </section>
+
+      <section class="w-full hidden fade sm:self-start success-area">
+        <div class="">
+          <div class="relative w-full overflow-x-hidden">
+            <img
+              src="images/check.svg"
+              class="absolute left-1/2 top-1/2 z-20 transform -translate-x-1/2 -translate-y-1/2"
+            />
+            <img
+              src="images/Ellipse 1.svg"
+              class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10"
+            />
+            <img src="images/confetti.png" class="max-w-[623px]" />
+          </div>
+          <div class="px-3 sm:pl-12 sm:pr-0">
+            <h2 class="text-white text-xl font-semibold mb-5 sm:text-[28px]">
+              You’re In! Get Ready to Face the Gorilla!
+            </h2>
+            <div class="sm:flex">
+              <p class="text-gray text-sm text-[16px]">
+                Congrats, <span class="text-blue name-replace">Derrick</span>!
+                You’ve secured your spot on the waitlist for 100 men vrs
+                Gorilla. We’ll email you at
+                <span class="email-replace">derrick@gmail.com</span> with next
+                steps. Stay tuned—this battle for $1,000,000 is about to get
+                wild!
+              </p>
+              <img
+                src="/images/desktop-dashboard.png"
+                class="hidden sm:block self-end max-w-[290px] max-h-[300px]"
+              />
+            </div>
+          </div>
+          <img src="/images/dashboard-img.png" class="mt-20 sm:hidden" />
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
